@@ -2,8 +2,8 @@
 CS 460 – Algorithms: Final Programming Assignment
 The Torchbearer
 
-Student Name: ___________________________
-Student ID:   ___________________________
+Student Name: Jason Pham
+Student ID:   132526911
 
 INSTRUCTIONS
 ------------
@@ -31,10 +31,13 @@ def explain_problem():
     str
         Your Part 1 README answers, written as a string.
         Must match what you wrote in README Part 1.
-
-    TODO
     """
-    return "TODO"
+    answer = (
+        "- A single shortest-path run from S is not enough because finding this tells us nothing about what order we should collect the relics in.\n"
+        "- The decision that remains is choosing the optimal order to retrieve all the relics and reach the exit.\n"
+        "- This requires a search over orders because different permutations of orders can have different fuel costs, so all viable orders must be checked to find the minimum."
+    )
+    return answer
 
 
 # =============================================================================

@@ -1,7 +1,7 @@
 # Development Log – The Torchbearer
 
-**Student Name:** ___________________________
-**Student ID:** ___________________________
+**Student Name:** Jason Pham
+**Student ID:** 132526911
 
 > Instructions: Write at least four dated entries. Required entry types are marked below.
 > Two to five sentences per entry is sufficient. Write entries as you go, not all in one
@@ -10,12 +10,14 @@
 
 ---
 
-## Entry 1 – [Date]: Initial Plan
+## Entry 1 – [5/13/2025]: Initial Plan
 
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
 
-_Your entry here._
+My plan is to go through each part one by one. I haven't read through all the parts yet, but the final seems to be set up in a specific order, especially since each part in Assignment.md has a corresponding section in README.md and torchbearer.py. I've just completed part 1.
+
+Part 2 is an implementation of Dijkstra's Algorithm, so that shouldn't be too hard, especially since we are importing a prio queue. I plan to do that first. However, we need to find the shortest path from the start node to the end node while hitting all relic rooms at least once. This seems much harder, so I'll do that afterwards. I'm not exactly sure how to test the last part, but I guess I'll figure it out along the way lol. Maybe I'll just brute force it and compute the  total fuel required for every combination of relics starting at S and ending at T.
 
 ---
 
