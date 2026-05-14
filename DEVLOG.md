@@ -10,7 +10,7 @@
 
 ---
 
-## Entry 1 – [5/13/2025]: Initial Plan
+## Entry 1 – [5/13/2026]: Initial Plan
 
 > Required. Write this before writing any code. Describe your plan: what you will
 > implement first, what parts you expect to be difficult, and how you plan to test.
@@ -21,12 +21,14 @@ Part 2 is an implementation of Dijkstra's Algorithm, so that shouldn't be too ha
 
 ---
 
-## Entry 2 – [Date]: [Short description]
+## Entry 2 – [5/14/2026]: [Short description]
 
 > Required. At least one entry must describe a bug, wrong assumption, or design change
 > you encountered. Describe what went wrong and how you resolved it.
 
-_Your entry here._
+Completed parts 2 and 3, this is my 2nd commit after my initial commit to set up the project repo. This concludes the Dijkstra's portion of the final, will be moving onto the final planning and implementation part soon.
+
+A bug I ran into was caused by not checking if the new calculated distance was < the previous distance stored in the dict. I made this mistake because previously, continue is called if current_dist > dist[current_node]. Because of this, I assumed that if the program didnt continue, then the current distance is 100% < dist[current_node].
 
 ---
 

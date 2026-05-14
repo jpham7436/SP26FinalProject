@@ -57,9 +57,13 @@ def select_sources(spawn, relics, exit_node):
     list[node]
         No duplicates. Order does not matter.
 
-    TODO
     """
-    pass
+    sources = [spawn]
+
+    for relic in relics:
+        sources.append[relic]
+    
+    return sources
 
 
 def run_dijkstra(graph, source):
@@ -75,10 +79,29 @@ def run_dijkstra(graph, source):
     dict[node, float]
         Minimum cost from source to every node in graph.
         Unreachable nodes map to float('inf').
-
-    TODO
     """
-    pass
+    dist = {}
+
+    for node in graph:
+        dist[node] = float('inf')
+
+    dist[source] = 0
+    pq = [(0, source)]
+
+    while pq:
+        current_dist, current_node = heapq.heappop(pq)
+
+        if current_dist > dist[current_node]:
+            continue
+
+        for neighbor, cost in graph[current_node]:
+            new_dist = current_dist + cost
+
+            if new_dist < dist[neighbor]:
+                dist[neighbor] = new_dist
+                heapq.heappush(pq, (new_dist, neighbor))
+
+    return dist
 
 
 def precompute_distances(graph, spawn, relics, exit_node):
@@ -95,10 +118,14 @@ def precompute_distances(graph, spawn, relics, exit_node):
     dict[node, dict[node, float]]
         Nested structure supporting dist_table[u][v] lookups
         for every source u your design requires.
-
-    TODO
     """
-    pass
+    dist_table = {}
+    sources = select_sources(spawn, relics, exit_node)
+
+    for source in sources:
+        dist_table[source] = run_dijkstra(graph, source)
+
+    return dist_table
 
 
 # =============================================================================
@@ -112,10 +139,19 @@ def dijkstra_invariant_check():
     str
         Your Part 3 README answers, written as a string.
         Must match what you wrote in README Part 3.
-
-    TODO
     """
-    return "TODO"
+    answer = (
+        "Part 3a:\n"
+        " - Stored distanced have been finalized and will never improve. Dijkstra's has already found the shortest path from source to those nodes.\n"
+        " - Stored distance is the shortest path found SO FAR using only finalized nodes as steps. This distance could improve as more nodes are finalized.\n"
+        "Part 3b:\n"
+        " - Source starts with distance 0 b/c no distance from source to source. All other nodes are set to infinity because no paths have been discovered so far.\n"
+        " - All edge weights = nonnegative, so unfinalized node with the smallest distance is already at it's shortest route. Distance can't be improved later by some other unfinalized node.\n"
+        " - The shortest distance to every reachable node from the source has been calculated. Unreachable nodes remain at infinity (because they can never be reached).\n"
+        "Part 3c:\n"
+        "Correct distances are important because the Torchbearer will need that information to calculate fuel costs between nodes of interest when comparing different relic orders."
+    )
+    return answer
 
 
 # =============================================================================

@@ -35,8 +35,8 @@
 
 | Source Node Type | Why it is a source |
 |---|---|
-| _node type_ | _one-line reason_ |
-| _node type_ | _one-line reason_ |
+| Starting node | Route starts here, so need cost from start to all potential relics |
+| All Relic nodes | After choosing a relic, we need costs to choose the next relic or the exit |
 
 ### Part 2b: Distance Storage
 
@@ -44,20 +44,20 @@
 
 | Property | Your answer |
 |---|---|
-| Data structure name | |
-| What the keys represent | |
-| What the values represent | |
-| Lookup time complexity | |
-| Why O(1) lookup is possible | |
+| Data structure name | nested dictionary |
+| What the keys represent | Outer keys represent source nodes, inner keys represent destination nodes |
+| What the values represent | Shortest fuel path discovered so far from the source node to the destinatio node |
+| Lookup time complexity | O(1) |
+| Why O(1) lookup is possible | Because we are using a python dictionary, which has an average O(1) lookup complexity |
 
 ### Part 2c: Precomputation Complexity
 
 > State the total complexity and show the arithmetic. Two to three lines max.
 
-- **Number of Dijkstra runs:** _your answer_
-- **Cost per run:** _your answer_
-- **Total complexity:** _your answer_
-- **Justification (one line):** _your answer_
+- **Number of Dijkstra runs:** 1 (source node) + k (number of relics) = 1 + k
+- **Cost per run:** O(m log n) given by ASSIGNMENT.md
+- **Total complexity:** # of runs * cost per run = (k + 1) * O(m log n) = O(k * m log n + m log n) = simplifies to O (k * m log n)
+- **Justification (one line):** We run Dijkstra's for every relic node + the starting node, hence k + 1. Cost per run is given by the assignment, so total complexity is # of runs * cost per run.
 
 ---
 
@@ -72,29 +72,29 @@
 > Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
-  _Your answer here._
+    - Stored distanced have been finalized and will never improve. Dijkstra's has already found the shortest path from source to those nodes.
 
 - **For nodes not yet finalized (not in S):**
-  _Your answer here._
+    - Stored distance is the shortest path found SO FAR using only finalized nodes as steps. This distance could improve as more nodes are finalized. 
 
 ### Part 3b: Why Each Phase Holds
 
 > One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
-  _Your answer here._
+    - Source starts with distance 0 b/c no distance from source to source. All other nodes are set to infinity because no paths have been discovered so far.
 
 - **Maintenance : why finalizing the min-dist node is always correct:**
-  _Your answer here._
+    - All edge weights = nonnegative, so unfinalized node with the smallest distance is already at it's shortest route. Distance can't be improved later by some other unfinalized node.
 
 - **Termination : what the invariant guarantees when the algorithm ends:**
-  _Your answer here._
+    - The shortest distance to every reachable node from the source has been calculated. Unreachable nodes remain at infinity (because they can never be reached).
 
 ### Part 3c: Why This Matters for the Route Planner
 
 > One sentence connecting correct distances to correct routing decisions.
 
-_Your answer here._
+Correct distances are important because the Torchbearer will need that information to calculate fuel costs between nodes of interest when comparing different relic orders.
 
 ---
 
