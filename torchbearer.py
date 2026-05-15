@@ -82,12 +82,16 @@ def run_dijkstra(graph, source):
     """
     dist = {}
 
+    # Set all distances to inf
     for node in graph:
         dist[node] = float('inf')
 
+    # Initialize source node
     dist[source] = 0
     pq = [(0, source)]
 
+    # Loops while pq still has nodes to process
+    # Checks previously found distances with new distances and updates accordingly
     while pq:
         current_dist, current_node = heapq.heappop(pq)
 
@@ -205,6 +209,7 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
     relics_remaining = set(relics)
     relics_visited_order = []
 
+    # Make initial call to explore function
     _explore(
         dist_table,
         spawn,
@@ -245,10 +250,11 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     This comment is graded.
     """
     if cost_so_far >= best[0]:
-        # This pruning is safe because all remaining travel costs are nonnegative.
-        # A branch whose current cost is already at least the best complete route cannot later become better.
+        # This pruning is safe because all travel costs are nonnegative.
+        # A branch whose current cost >= the best complete route cannot become better than the best route found so far..
         return
 
+    # Recusion base case - all relics collected -> go to exit
     if not relics_remaining:
         exit_cost = dist_table[current_loc][exit_node]
 
@@ -263,6 +269,7 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
 
         return
 
+    # Backtracking implementation - remove selected relic
     for relic in list(relics_remaining):
         travel_cost = dist_table[current_loc][relic]
 
@@ -272,6 +279,7 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
         relics_remaining.remove(relic)
         relics_visited_order.append(relic)
 
+        # Recursive call
         _explore(
             dist_table,
             relic,
@@ -282,6 +290,7 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
             best
         )
 
+    # Backtracking implementation - add previously selected relic again
         relics_visited_order.pop()
         relics_remaining.add(relic)
 

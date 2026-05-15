@@ -32,33 +32,32 @@ A bug I ran into was caused by not checking if the new calculated distance was <
 
 ---
 
-## Entry 3 – [Date]: [Short description]
+## Entry 3 – [5/14/2026]: [Short description]
 
-_Your entry here._
+Completed parts 4-6 for both the README and the torchbearer.py file. This is the 3rd commit and final coding commit. I am going to review everything, delete all the comment blocks, and prepare for final submission now.
 
 ---
 
-## Entry 4 – [Date]: Post-Implementation Reflection
+## Entry 4 – [5/14/2026]: Post-Implementation Reflection
 
-> Required. Written after your implementation is complete. Describe what you would
-> change or improve given more time.
+Just removed all comment blocks, added some comments to explain code, and finalized the submission. 
 
-_Your entry here._
+Given more time, I wish I could find a way to optimize the explore function. I ended up optimizng the brute-force approach mentioned earlier by pruning unnecessary branches, but there has to be some actual algorithm that lets us find the optimal route without this optimized brute force technique.
 
 ---
 
 ## Final Entry – [Date]: Time Estimate
 
-> Required. Estimate minutes spent per part. Honesty is expected; accuracy is not graded.
+ - Note: these estimates are for how long I actually spent typing/coding. I'm not exactly sure how long it took to actually understand the project because it took me a long time for each section lol.
 
-| Part | Estimated Hours |
+| Part | Estimated Minutes |
 |---|---|
-| Part 1: Problem Analysis | |
-| Part 2: Precomputation Design | |
-| Part 3: Algorithm Correctness | |
-| Part 4: Search Design | |
-| Part 5: State and Search Space | |
-| Part 6: Pruning | |
-| Part 7: Implementation | |
-| README and DEVLOG writing | |
-| **Total** | |
+| Part 1: Problem Analysis | 10 |
+| Part 2: Precomputation Design | 18 |
+| Part 3: Algorithm Correctness | 5 |
+| Part 4: Search Design | 8 |
+| Part 5: State and Search Space | 15 |
+| Part 6: Pruning | 20 |
+| Part 7: Implementation | 20 |
+| README and DEVLOG writing | 30 |
+| **Total** | 126 minutes |

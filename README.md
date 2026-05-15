@@ -4,17 +4,9 @@
 **Student ID:** 132526911
 **Course:** CS 460 – Algorithms | Spring 2026
 
-> This README is your project documentation. Write it the way a developer would document
-> their design decisions , bullet points, brief justifications, and concrete examples where
-> required. You are not writing an essay. You are explaining what you built and why you built
-> it that way. Delete all blockquotes like this one before submitting.
-
 ---
 
 ## Part 1: Problem Analysis
-
-> Document why this problem is not just a shortest-path problem. Three bullet points, one
-> per question. Each bullet should be 1-2 sentences max.
 
 - **Why a single shortest-path run from S is not enough:**
     - A single shortest-path run from S is not enough because finding this tells us nothing about what order we should collect the relics in.
@@ -27,11 +19,12 @@
 
 ---
 
+
+
+
 ## Part 2: Precomputation Design
 
 ### Part 2a: Source Selection
-
-> List the source node types as a bullet list. For each, one-line reason.
 
 | Source Node Type | Why it is a source |
 |---|---|
@@ -39,8 +32,6 @@
 | All Relic nodes | After choosing a relic, we need costs to choose the next relic or the exit |
 
 ### Part 2b: Distance Storage
-
-> Fill in the table. No prose required.
 
 | Property | Your answer |
 |---|---|
@@ -52,8 +43,6 @@
 
 ### Part 2c: Precomputation Complexity
 
-> State the total complexity and show the arithmetic. Two to three lines max.
-
 - **Number of Dijkstra runs:** 1 (source node) + k (number of relics) = 1 + k
 - **Cost per run:** O(m log n) given by ASSIGNMENT.md
 - **Total complexity:** # of runs * cost per run = (k + 1) * O(m log n) = O(k * m log n + m log n) = simplifies to O (k * m log n)
@@ -61,15 +50,12 @@
 
 ---
 
+
+
+
 ## Part 3: Algorithm Correctness
 
-> Document your understanding of why Dijkstra produces correct distances.
-> Bullet points and short sentences throughout. No paragraphs.
-
 ### Part 3a: What the Invariant Means
-
-> Two bullets: one for finalized nodes, one for non-finalized nodes.
-> Do not copy the invariant text from the spec.
 
 - **For nodes already finalized (in S):**
     - Stored distanced have been finalized and will never improve. Dijkstra's has already found the shortest path from source to those nodes.
@@ -78,8 +64,6 @@
     - Stored distance is the shortest path found SO FAR using only finalized nodes as steps. This distance could improve as more nodes are finalized. 
 
 ### Part 3b: Why Each Phase Holds
-
-> One to two bullets per phase. Maintenance must mention nonnegative edge weights.
 
 - **Initialization : why the invariant holds before iteration 1:**
     - Source starts with distance 0 b/c no distance from source to source. All other nodes are set to infinity because no paths have been discovered so far.
@@ -92,18 +76,16 @@
 
 ### Part 3c: Why This Matters for the Route Planner
 
-> One sentence connecting correct distances to correct routing decisions.
-
 Correct distances are important because the Torchbearer will need that information to calculate fuel costs between nodes of interest when comparing different relic orders.
 
 ---
 
+
+
+
 ## Part 4: Search Design
 
 ### Why Greedy Fails
-
-> State the failure mode. Then give a concrete counter-example using specific node names
-> or costs (you may use the illustration example from the spec). Three to five bullets.
 
 - **The failure mode:** - Greedy choices pick relics without considering how the choice affects the remaining choices and cost. For example, greedy may choose the closest relic first
 - **Counter-example setup:** - S -> B costs 1, S -> C costs 3, B <-> C costs 1, B -> T costs 1, C -> T costs 10 
@@ -113,18 +95,16 @@ Correct distances are important because the Torchbearer will need that informati
 
 ### What the Algorithm Must Explore
 
-> One bullet. Must use the word "order."
-
 - The algorithm must explore the different possible orders to get relics because the final order is what deteremines total fuel cost. 
 
 ---
 
+
+
+
 ## Part 5: State and Search Space
 
 ### Part 5a: State Representation
-
-> Document the three components of your search state as a table.
-> Variable names here must match exactly what you use in torchbearer.py.
 
 | Component | Variable name in code | Data type | Description |
 |---|---|---|---|
@@ -133,8 +113,6 @@ Correct distances are important because the Torchbearer will need that informati
 | Fuel cost so far | cost_so_far | float | stores total fuel used so far |
 
 ### Part 5b: Data Structure for Visited Relics
-
-> Fill in the table.
 
 | Property | Your answer |
 |---|---|
@@ -146,18 +124,17 @@ Correct distances are important because the Torchbearer will need that informati
 
 ### Part 5c: Worst-Case Search Space
 
-> Two bullets.
-
 - **Worst-case number of orders considered:** k!
 - **Why:** With k relics, the algorithm may have to check all possible permutations of the relics, which is k!
 
 ---
 
+
+
+
 ## Part 6: Pruning
 
 ### Part 6a: Best-So-Far Tracking
-
-> Three bullets.
 
 - **What is tracked:** - The best fuel cost found so far and the order that get that fuel cost
 - **When it is used:** - It is checked at the beginning of the function to see if the current cost is >= the best cost
@@ -165,23 +142,18 @@ Correct distances are important because the Torchbearer will need that informati
 
 ### Part 6b: Lower Bound Estimation
 
-> Three bullets.
-
 - **What information is available at the current state:** - Current location, relics still remaining, relic orer so far, and fuel cost so far.
 - **What the lower bound accounts for:** - Accounts for fuel that ahs already been spent.
 - **Why it never overestimates:** - Because any complete route from this point on must cost at least as much as the fuel already spent
 
 ### Part 6c: Pruning Correctness
 
-> One to two bullets. Explain why pruning is safe.
-
 - If cost_so_far is already >= the best solution, continuing that branch means we will be increasing cost_so_far, making it > the best solution (so we already know that we can prune it out).
 - It is important to note that all weights are nonnegative, so adding more paths to the solution will always increase fuel cost.
 
 ---
 
-## References
 
-> Bullet list. If none beyond lecture notes, write that.
+## References
 
 - None beyond lecture notes and recordings (ty for recording lectures btw)
