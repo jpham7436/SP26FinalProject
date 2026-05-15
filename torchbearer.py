@@ -35,7 +35,7 @@ def explain_problem():
     answer = (
         "- A single shortest-path run from S is not enough because finding this tells us nothing about what order we should collect the relics in.\n"
         "- The decision that remains is choosing the optimal order to retrieve all the relics and reach the exit.\n"
-        "- This requires a search over orders because different permutations of orders can have different fuel costs, so all viable orders must be checked to find the minimum."
+        "- This requires a search over orders because different permutations of orders can have different fuel costs, so all viable orders must be checked to find the minimum.\n"
     )
     return answer
 
@@ -61,7 +61,7 @@ def select_sources(spawn, relics, exit_node):
     sources = [spawn]
 
     for relic in relics:
-        sources.append[relic]
+        sources.append(relic)
     
     return sources
 
@@ -149,7 +149,7 @@ def dijkstra_invariant_check():
         " - All edge weights = nonnegative, so unfinalized node with the smallest distance is already at it's shortest route. Distance can't be improved later by some other unfinalized node.\n"
         " - The shortest distance to every reachable node from the source has been calculated. Unreachable nodes remain at infinity (because they can never be reached).\n"
         "Part 3c:\n"
-        "Correct distances are important because the Torchbearer will need that information to calculate fuel costs between nodes of interest when comparing different relic orders."
+        "Correct distances are important because the Torchbearer will need that information to calculate fuel costs between nodes of interest when comparing different relic orders.\n"
     )
     return answer
 
@@ -165,10 +165,18 @@ def explain_search():
     str
         Your Part 4 README answers, written as a string.
         Must match what you wrote in README Part 4.
-
-    TODO
     """
-    return "TODO"
+    answer = (
+        "Why Greedy Fails:\n"
+        " - Greedy choices pick relics without considering how the choice affects the remaining choices and cost. For example, greedy may choose the closest relic first\n"
+        " - S -> B costs 1, S -> C costs 3, B <-> C costs 1, B -> T costs 1, C -> T costs 10 \n"
+        " - S -> B (1) -> C (1) -> T (10) -> total: 12\n"
+        " - S -> C(3) -> B (1) -> T (1) -> total: 5\n"
+        " - A locally optimal decision can close off routes for a global optimal solution by putting the Torchbearer in a bad position.\n"
+        "What the Algorithm Must Explore:\n"
+        " - The algorithm must explore the different possible orders to get relics because the final order is what deteremines total fuel cost.\n"
+    )
+    return answer
 
 
 # =============================================================================
@@ -192,10 +200,22 @@ def find_optimal_route(dist_table, spawn, relics, exit_node):
     tuple[float, list[node]]
         (minimum_fuel_cost, ordered_relic_list)
         Returns (float('inf'), []) if no valid route exists.
-
-    TODO
     """
-    pass
+    best = [float('inf'), []]
+    relics_remaining = set(relics)
+    relics_visited_order = []
+
+    _explore(
+        dist_table,
+        spawn,
+        relics_remaining,
+        relics_visited_order,
+        0,
+        exit_node,
+        best
+    )
+
+    return best[0], best[1]
 
 
 def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
@@ -220,14 +240,50 @@ def _explore(dist_table, current_loc, relics_remaining, relics_visited_order,
     None
         Updates best in place.
 
-    TODO
-    Implement: base case, pruning, recursive case, backtracking.
-
     REQUIRED: Add a 1-2 sentence comment near your pruning condition
     explaining why it is safe (cannot skip the optimal solution).
     This comment is graded.
     """
-    pass
+    if cost_so_far >= best[0]:
+        # This pruning is safe because all remaining travel costs are nonnegative.
+        # A branch whose current cost is already at least the best complete route cannot later become better.
+        return
+
+    if not relics_remaining:
+        exit_cost = dist_table[current_loc][exit_node]
+
+        if exit_cost == float('inf'):
+            return
+
+        total_cost = cost_so_far + exit_cost
+
+        if total_cost < best[0]:
+            best[0] = total_cost
+            best[1] = relics_visited_order.copy()
+
+        return
+
+    for relic in list(relics_remaining):
+        travel_cost = dist_table[current_loc][relic]
+
+        if travel_cost == float('inf'):
+            continue
+
+        relics_remaining.remove(relic)
+        relics_visited_order.append(relic)
+
+        _explore(
+            dist_table,
+            relic,
+            relics_remaining,
+            relics_visited_order,
+            cost_so_far + travel_cost,
+            exit_node,
+            best
+        )
+
+        relics_visited_order.pop()
+        relics_remaining.add(relic)
 
 
 # =============================================================================
@@ -248,10 +304,9 @@ def solve(graph, spawn, relics, exit_node):
     tuple[float, list[node]]
         (minimum_fuel_cost, ordered_relic_list)
         Returns (float('inf'), []) if no valid route exists.
-
-    TODO
     """
-    pass
+    dist_table = precompute_distances(graph, spawn, relics, exit_node)
+    return find_optimal_route(dist_table, spawn, relics, exit_node)
 
 
 # =============================================================================
